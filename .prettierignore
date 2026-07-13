@@ -1,0 +1,10 @@
+.next/
+node_modules/
+out/
+package-lock.json
+public/
+*.pdf
+
+# Hedra's source documents — Prettier does not get to reflow these.
+PORTFOLIO_BRIEF.md
+ENGINEERING_DECISIONS_WORKSHEET.md
