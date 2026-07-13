@@ -39,8 +39,6 @@ export const SITE: SiteConfig = {
   links: {
     github: "https://github.com/hedra-emad",
     linkedin: "https://www.linkedin.com/in/hedra-emad",
-    /* TODO(hedra): the public contact address. Stays null until supplied —
-       the footer renders no email link rather than a wrong one. */
-    email: null,
+    email: "emadhedra4@gmail.com",
   },
 } as const;
