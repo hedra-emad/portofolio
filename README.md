@@ -49,11 +49,33 @@ them, so the site never renders a placeholder link.
 
 ## Design system
 
-Colour and type tokens are declared once in `app/globals.css` as CSS custom
-properties, then mapped into Tailwind utilities with `@theme inline`. Dark mode
-re-declares the same custom properties inside a `prefers-color-scheme` media
-query — the tokens flip, the markup does not, which is why there are almost no
-`dark:` variants in this codebase.
+Swiss editorial grid, **light only** — one well-executed theme rather than two
+half-executed ones, which also removes a whole class of contrast bugs. There is
+no `dark:` variant anywhere in this repo and no theme toggle.
 
-Run the dev server and open `/` for the full specimen: type scale, swatches with
-their measured contrast ratios, prose at the 68ch measure, and focus states.
+Colour and type tokens are declared once in `app/globals.css` as CSS custom
+properties, then mapped into Tailwind utilities with `@theme inline`.
+
+Two families. **Inter Tight** carries the argument; **IBM Plex Mono** carries the
+apparatus — section numbers, stat labels, dates, tech tags, file paths and code.
+The mono is structural, not decorative, and the separation of those two registers
+is what makes the page read as engineered.
+
+Run the dev server and open `/` for the full specimen: the 12-column grid, the
+type scale, swatches with their measured contrast ratios, prose at the 68ch
+measure, and every component.
+
+## Local development on Windows
+
+If you clone this onto a OneDrive-synced path and build under WSL, OneDrive will
+sync a Windows copy of `node_modules` over the Linux one and the build dies with
+`Cannot find module '../lightningcss.linux-x64-gnu.node'`. Keep `node_modules`
+off the synced drive:
+
+```bash
+mkdir -p ~/.node-modules-store/hedra-portfolio
+ln -s ~/.node-modules-store/hedra-portfolio node_modules
+npm install
+```
+
+Linux CI and Vercel are unaffected.

@@ -1,30 +1,50 @@
-import type { ReactNode } from "react";
+import type { ElementType, ReactNode } from "react";
 
 type ContainerProps = {
   /**
-   * `prose` caps the measure at 68ch — the readable-line-length constraint from
-   * the brief. `wide` is for anything that is not a line of text: code blocks,
-   * diagrams, card grids.
+   * `measure` caps the line length at 68ch for prose. `wide` is the 12-column
+   * field — used for anything that is not a line of text: code, diagrams,
+   * screenshots, the stat strip.
    */
-  width?: "prose" | "wide";
-  as?: "div" | "section" | "header" | "footer" | "article";
+  width?: "measure" | "wide";
+  as?: ElementType;
   className?: string;
   children: ReactNode;
 };
 
 const WIDTHS = {
-  prose: "max-w-measure",
+  measure: "max-w-measure",
   wide: "max-w-wide",
 } as const;
 
 export function Container({
-  width = "prose",
+  width = "wide",
   as: Tag = "div",
   className = "",
   children,
 }: ContainerProps) {
   return (
     <Tag className={`mx-auto w-full px-6 ${WIDTHS[width]} ${className}`}>
+      {children}
+    </Tag>
+  );
+}
+
+/**
+ * The 12-column field itself. Nothing on this site floats: every block declares
+ * a column span, so the layout reads as set rather than arranged.
+ */
+export function Grid({
+  as: Tag = "div",
+  className = "",
+  children,
+}: {
+  as?: ElementType;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <Tag className={`grid grid-cols-4 gap-6 md:grid-cols-12 ${className}`}>
       {children}
     </Tag>
   );

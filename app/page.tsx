@@ -1,168 +1,248 @@
 import type { Metadata } from "next";
 
-import { Container } from "@/components/container";
+import { Cite } from "@/components/cite";
+import { Container, Grid } from "@/components/container";
+import { Reveal } from "@/components/reveal";
+import { Section } from "@/components/section";
+import { StatStrip, type Stat } from "@/components/stat-strip";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Design system",
-  description: "Type scale, colour tokens and component states.",
+  description: "Type scale, colour tokens, grid and components.",
 };
 
 const TYPE_SCALE = [
-  { token: "--text-display", size: "45 → 55px", sample: "Display" },
-  { token: "--text-h1", size: "37 → 44px", sample: "Heading 1" },
-  { token: "--text-h2", size: "31 → 35px", sample: "Heading 2" },
-  { token: "--text-h3", size: "28px", sample: "Heading 3" },
-  { token: "--text-lead", size: "22px", sample: "Lead paragraph" },
-  { token: "--text-base", size: "18px", sample: "Body copy" },
-  { token: "--text-sm", size: "16px", sample: "Caption / nav" },
-  { token: "--text-xs", size: "14px", sample: "Label / meta" },
+  {
+    role: "Display",
+    token: "--text-display",
+    spec: "56 → 64px / 500 / -0.02em",
+  },
+  { role: "Heading 2", token: "--text-h2", spec: "32px / 500 / -0.015em" },
+  { role: "Heading 3", token: "--text-h3", spec: "22px / 500 / -0.01em" },
+  { role: "Body", token: "--text-body", spec: "18px / 400 / 1.7" },
+  { role: "Caption", token: "--text-caption", spec: "14px / 400" },
+  { role: "Mono label", token: "--text-label", spec: "13px / 400 / 0.02em" },
 ] as const;
-
-const BODY_STEPS: readonly string[] = ["--text-base", "--text-sm", "--text-xs"];
 
 const SWATCHES = [
-  { token: "--bg", role: "Page background", contrast: null },
-  { token: "--surface", role: "Raised surface", contrast: null },
-  { token: "--border", role: "Hairline rule", contrast: null },
+  { token: "--bg", value: "#FAFAF8", use: "page", contrast: null },
+  { token: "--surface", value: "#FFFFFF", use: "cards, code", contrast: null },
   {
-    token: "--fg",
-    role: "Body text",
-    contrast: "18.03:1 light · 15.81:1 dark",
+    token: "--text",
+    value: "#111111",
+    use: "body, headings",
+    contrast: "18.07:1",
   },
-  { token: "--fg-muted", role: "Secondary text", contrast: "6.93:1 · 6.68:1" },
+  {
+    token: "--text-muted",
+    value: "#5F5E5A",
+    use: "metadata",
+    contrast: "6.21:1",
+  },
+  { token: "--border", value: "#E3E1DA", use: "hairlines", contrast: null },
   {
     token: "--accent",
-    role: "Links, active states",
-    contrast: "5.86:1 · 6.57:1",
+    value: "#0F6E56",
+    use: "links, key numbers",
+    contrast: "5.94:1",
   },
 ] as const;
+
+/* Real numbers, from PORTFOLIO_BRIEF.md §5.4 — every one verifiable from the
+   EduGenie repo. Shown here because a component demo built on invented data is
+   a component demo you cannot trust. */
+const DEMO_STATS: readonly Stat[] = [
+  { label: "rest endpoints", value: "188", accent: true },
+  { label: "feature modules", value: "32" },
+  { label: "jest tests, green", value: "140" },
+  { label: "week build, team of 5", value: "6" },
+];
+
+const TAGS = ["typescript", "nestjs", "next.js", "mongodb", "stripe", "rag"];
 
 export default function DesignSystemPage() {
   return (
-    <Container width="wide" className="py-16">
-      <p className="border-border bg-surface text-fg-muted mb-10 inline-block border px-3 py-1 text-xs">
-        Phase 1 specimen — this route becomes the landing page in Phase 2.
-      </p>
-
-      <h1 style={{ fontSize: "var(--text-display)" }}>Design system</h1>
-      <p className="max-w-measure text-lead text-fg-muted mt-6">
-        Every token below is defined once in{" "}
-        <code className="text-base">app/globals.css</code> and consumed as a
-        Tailwind utility. Switch your OS to dark mode and this page changes
-        without a single <code className="text-base">dark:</code> class.
-      </p>
-
-      <section className="mt-20">
-        <h2>Type scale</h2>
-        <p className="max-w-measure text-fg-muted mt-4">
-          Minor third (1.200) on a phone, major third (1.250) on a desktop. The
-          three largest steps interpolate between the two with{" "}
-          <code className="text-base">clamp()</code>; the rest are fixed.
+    <>
+      <Container className="py-(--spacing-section)">
+        <p className="label mb-6">phase 1 / specimen</p>
+        <h1>Design system</h1>
+        <p className="text-text-muted max-w-measure mt-8">
+          Swiss editorial grid, light only. Two families: Inter Tight carries
+          the argument, IBM Plex Mono carries the apparatus — section numbers,
+          stat labels, dates, tags, file paths, code. Keeping those two
+          registers strictly separate is what makes the page read as engineered
+          rather than arranged. This route becomes the landing page in phase 2.
         </p>
+      </Container>
 
-        <ul className="divide-border border-border mt-10 divide-y border-y">
+      <Section number="01" title="Grid">
+        <p className="text-text-muted max-w-measure">
+          Twelve columns at 1152px, four on a phone. Every block declares a
+          span; nothing floats. The columns below are drawn only to prove they
+          exist — they are never drawn on the real pages.
+        </p>
+        <Grid className="mt-8">
+          {Array.from({ length: 12 }, (_, i) => (
+            <div
+              key={i}
+              className="border-border bg-surface h-16 border"
+              aria-hidden
+            />
+          ))}
+        </Grid>
+      </Section>
+
+      <Section number="02" title="Type">
+        <ul className="border-border border-t">
           {TYPE_SCALE.map((step) => (
             <li
               key={step.token}
-              className="flex flex-wrap items-baseline justify-between gap-4 py-5"
+              className="border-border flex flex-wrap items-baseline justify-between gap-4 border-b py-6"
             >
               <span
-                className={
-                  BODY_STEPS.includes(step.token)
-                    ? "font-sans"
-                    : "font-serif font-semibold"
-                }
-                style={{ fontSize: `var(${step.token})`, lineHeight: 1.2 }}
+                className="font-medium"
+                style={{
+                  fontSize: `var(${step.token})`,
+                  letterSpacing:
+                    step.token === "--text-display" ? "-0.02em" : "-0.01em",
+                  lineHeight: 1.15,
+                }}
               >
-                {step.sample}
+                {step.role}
               </span>
-              <span className="text-fg-muted font-mono text-xs">
-                {step.token} · {step.size}
-              </span>
+              <span className="label">{step.spec}</span>
             </li>
           ))}
         </ul>
-      </section>
 
-      <section className="mt-20">
-        <h2>Colour</h2>
-        <p className="max-w-measure text-fg-muted mt-4">
-          Warm near-black on warm off-white, one accent. Every ratio below was
-          computed against the page background in both schemes rather than
-          eyeballed — the weakest pair on the site is 5.86:1, past the 4.5:1 AA
-          threshold for body text at any size.
+        <div className="max-w-measure mt-12">
+          <h3>Prose sits at 68 characters</h3>
+          <p className="mt-4">
+            Body copy is 18px with a line-height of 1.7 and a measure capped at
+            68 characters. That cap is why this column stops well short of the
+            page edge: past roughly 75 characters the eye loses its place on the
+            return sweep, and an over-long line is the single most common
+            failure of layouts that call themselves minimal. Two weights on this
+            site, 400 and 500 — never 600 or 700, because a bold grotesque at
+            display size reads as shouting.
+          </p>
+          <p className="mt-6">
+            Links are the accent with a 1px underline —{" "}
+            <a href="#main" className="link">
+              like this one
+            </a>{" "}
+            — because colour on its own is not an accessible way to mark a link.
+            Sentence case everywhere. Mono labels are lowercase.
+          </p>
+        </div>
+      </Section>
+
+      <Section number="03" title="Colour">
+        <p className="text-text-muted max-w-measure">
+          Every ratio below was computed against the page background rather than
+          eyeballed. The weakest pairing on the site is the accent at 5.94:1,
+          past the 4.5:1 AA threshold for body text at any size. Light only: one
+          well-executed theme, and a whole class of contrast bugs that cannot
+          occur.
         </p>
-
-        <ul className="border-border bg-border mt-10 grid gap-px border sm:grid-cols-2">
+        <ul className="border-border mt-8 grid border-t sm:grid-cols-2 lg:grid-cols-3">
           {SWATCHES.map((swatch) => (
             <li
               key={swatch.token}
-              className="bg-bg flex items-center gap-4 p-5"
+              className="border-border flex items-center gap-4 border-r border-b p-5"
             >
               <span
                 aria-hidden
-                className="border-border size-12 shrink-0 rounded border"
-                style={{ backgroundColor: `var(${swatch.token})` }}
+                className="border-border size-10 shrink-0 border"
+                style={{ backgroundColor: swatch.value }}
               />
               <span className="min-w-0">
-                <span className="block font-mono text-sm">{swatch.token}</span>
-                <span className="text-fg-muted block text-xs">
-                  {swatch.role}
+                <span className="label block normal-case">{swatch.token}</span>
+                <span className="label block">
+                  {swatch.value} · {swatch.use}
                   {swatch.contrast === null ? "" : ` · ${swatch.contrast}`}
                 </span>
               </span>
             </li>
           ))}
         </ul>
-      </section>
+      </Section>
 
-      <section className="mt-20">
-        <h2>Prose</h2>
-        <div className="max-w-measure mt-6">
-          <p>
-            Body copy sits at 18px, line-height 1.6, measure capped at 68
-            characters. That cap is why this column stops well short of the page
-            edge on a wide screen: past roughly 75 characters the eye starts
-            losing its place on the return sweep, and an over-long line is the
-            most common failure of sites that call themselves minimal.
-          </p>
-          <p className="mt-6">
-            Headings are set in Source Serif 4, body in Inter, code in JetBrains
-            Mono. An inline link —{" "}
-            <a href="#main" className="link">
-              like this one
-            </a>{" "}
-            — takes the accent colour and keeps its underline, because colour on
-            its own is not an accessible way to mark a link.
-          </p>
-          <pre className="border-border bg-surface mt-6 overflow-x-auto rounded border p-4 text-sm">
-            <code>{`function chunk(text: string, maxChars = 1800, overlap = 250) {
-  // Code breaks out of the 68ch measure. It is not prose.
-}`}</code>
-          </pre>
-        </div>
-      </section>
-
-      <section className="mt-20">
-        <h2>States</h2>
-        <p className="max-w-measure text-fg-muted mt-4">
-          Tab through these. Focus is a 2px accent outline at a 2px offset,
-          applied globally through{" "}
-          <code className="text-base">:focus-visible</code> — visible to
-          keyboard users, invisible to mouse users.
+      <Section number="04" title="Components">
+        <h3>Stat strip</h3>
+        <p className="text-text-muted max-w-measure mt-3">
+          A row, not cards. Mono label above, number below, hairline dividers,
+          no shadows. The accent is rationed to at most two numbers per page.
         </p>
-        <div className="mt-8 flex flex-wrap items-center gap-4">
-          <a href="#main" className="btn-primary">
-            Primary action
+        <div className="mt-6">
+          <StatStrip stats={DEMO_STATS} />
+        </div>
+
+        <h3 className="mt-14">Citation line</h3>
+        <p className="text-text-muted max-w-measure mt-3">
+          The brief&rsquo;s first principle is that every claim here is
+          verifiable in one click, and that the site has to survive{" "}
+          <em>&ldquo;how much of this did AI write?&rdquo;</em>. A sentence
+          promising that does not survive the question; a visible, repeated
+          apparatus does. So a claim and its evidence are one component — hung
+          off a hairline, in mono, naming the file or link it came from.
+        </p>
+        <Cite
+          source="github.com/hedra-emad"
+          href={SITE.links.github ?? undefined}
+        >
+          <p className="max-w-measure">
+            188 REST endpoints across 32 feature modules.
+          </p>
+        </Cite>
+
+        <h3 className="mt-14">Tech tags</h3>
+        <ul className="mt-6 flex flex-wrap gap-2">
+          {TAGS.map((tag) => (
+            <li key={tag} className="tag">
+              {tag}
+            </li>
+          ))}
+        </ul>
+
+        <h3 className="mt-14">Code</h3>
+        <p className="text-text-muted max-w-measure mt-3">
+          Evidence, not a light show. Surface background, 1px hairline, 4px
+          radius, no syntax circus. Code breaks out of the 68ch measure because
+          it is not prose.
+        </p>
+        <pre className="code-block mt-6">
+          <code>{`export function chunk(text: string, maxChars = 1800, overlap = 250) {
+  // Sentence-aware windows. Never cuts mid-sentence, because an embedding
+  // of half a sentence represents half a thought.
+}`}</code>
+        </pre>
+
+        <h3 className="mt-14">Actions</h3>
+        <div className="mt-6 flex flex-wrap items-center gap-4">
+          <a href="#main" className="btn btn-primary">
+            View EduGenie
           </a>
-          <a href="#main" className="btn-secondary">
-            Secondary action
-          </a>
-          <a href="#main" className="link">
-            Text link
+          <a href="#main" className="btn btn-secondary">
+            GitHub
           </a>
         </div>
-      </section>
-    </Container>
+      </Section>
+
+      <Section number="05" title="Motion">
+        <p className="text-text-muted max-w-measure">
+          Fade and an 8px translate, 300ms, once. That is the entire vocabulary.
+          The hidden state is gated in CSS on{" "}
+          <code className="text-[0.9em]">scripting: enabled</code> and{" "}
+          <code className="text-[0.9em]">prefers-reduced-motion</code>, so a
+          reader with JavaScript off or reduced motion on is never shown a blank
+          column waiting for an observer that will not fire.
+        </p>
+        <Reveal className="border-border bg-surface mt-8 border p-6">
+          <p className="label">this block faded in — once</p>
+        </Reveal>
+      </Section>
+    </>
   );
 }

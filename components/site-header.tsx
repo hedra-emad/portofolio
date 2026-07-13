@@ -7,14 +7,8 @@ import { SITE } from "@/lib/site";
 export function SiteHeader() {
   return (
     <header className="border-border border-b">
-      <Container
-        width="wide"
-        className="flex items-center justify-between gap-6 py-5"
-      >
-        <Link
-          href="/"
-          className="text-lead font-serif font-semibold tracking-tight"
-        >
+      <Container className="flex items-center justify-between gap-6 py-5">
+        <Link href="/" className="font-medium tracking-tight">
           {SITE.name}
         </Link>
         <SiteNav />
