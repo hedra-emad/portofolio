@@ -30,15 +30,17 @@ export type SiteConfig = {
 export const SITE: SiteConfig = {
   name: "Hedra Emad Fawzy",
   role: "Full-Stack Developer — TypeScript, NestJS, React & Next.js",
-  url: null,
+  url: "https://hedra-emad.vercel.app",
   nav: [
     { href: "/#work", label: "Work" },
     { href: "/about", label: "About" },
     { href: "/cv", label: "CV" },
   ],
   links: {
-    github: null,
-    linkedin: null,
+    github: "https://github.com/hedra-emad",
+    linkedin: "https://www.linkedin.com/in/hedra-emad",
+    /* TODO(hedra): the public contact address. Stays null until supplied —
+       the footer renders no email link rather than a wrong one. */
     email: null,
   },
 } as const;
