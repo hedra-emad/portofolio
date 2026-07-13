@@ -1,247 +1,140 @@
-import type { Metadata } from "next";
+import Link from "next/link";
 
-import { Cite } from "@/components/cite";
-import { Container, Grid } from "@/components/container";
+import { Container } from "@/components/container";
+import { ProjectCard } from "@/components/project-card";
 import { Reveal } from "@/components/reveal";
 import { Section } from "@/components/section";
-import { StatStrip, type Stat } from "@/components/stat-strip";
+import { BACKGROUND, SKILL_GROUPS } from "@/content/cv";
+import { EDUGENIE, PROJECTS } from "@/content/projects";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Design system",
-  description: "Type scale, colour tokens, grid and components.",
-};
-
-const TYPE_SCALE = [
-  {
-    role: "Display",
-    token: "--text-display",
-    spec: "56 → 64px / 500 / -0.02em",
-  },
-  { role: "Heading 2", token: "--text-h2", spec: "32px / 500 / -0.015em" },
-  { role: "Heading 3", token: "--text-h3", spec: "22px / 500 / -0.01em" },
-  { role: "Body", token: "--text-body", spec: "18px / 400 / 1.7" },
-  { role: "Caption", token: "--text-caption", spec: "14px / 400" },
-  { role: "Mono label", token: "--text-label", spec: "13px / 400 / 0.02em" },
-] as const;
-
-const SWATCHES = [
-  { token: "--bg", value: "#FAFAF8", use: "page", contrast: null },
-  { token: "--surface", value: "#FFFFFF", use: "cards, code", contrast: null },
-  {
-    token: "--text",
-    value: "#111111",
-    use: "body, headings",
-    contrast: "18.07:1",
-  },
-  {
-    token: "--text-muted",
-    value: "#5F5E5A",
-    use: "metadata",
-    contrast: "6.21:1",
-  },
-  { token: "--border", value: "#E3E1DA", use: "hairlines", contrast: null },
-  {
-    token: "--accent",
-    value: "#0F6E56",
-    use: "links, key numbers",
-    contrast: "5.94:1",
-  },
-] as const;
-
-/* Real numbers, from PORTFOLIO_BRIEF.md §5.4 — every one verifiable from the
-   EduGenie repo. Shown here because a component demo built on invented data is
-   a component demo you cannot trust. */
-const DEMO_STATS: readonly Stat[] = [
-  { label: "rest endpoints", value: "188", accent: true },
-  { label: "feature modules", value: "32" },
-  { label: "jest tests, green", value: "140" },
-  { label: "week build, team of 5", value: "6" },
-];
-
-const TAGS = ["typescript", "nestjs", "next.js", "mongodb", "stripe", "rag"];
-
-export default function DesignSystemPage() {
+export default function HomePage() {
   return (
     <>
-      <Container className="py-(--spacing-section)">
-        <p className="label mb-6">phase 1 / specimen</p>
-        <h1>Design system</h1>
-        <p className="text-text-muted max-w-measure mt-8">
-          Swiss editorial grid, light only. Two families: Inter Tight carries
-          the argument, IBM Plex Mono carries the apparatus — section numbers,
-          stat labels, dates, tags, file paths, code. Keeping those two
-          registers strictly separate is what makes the page read as engineered
-          rather than arranged. This route becomes the landing page in phase 2.
+      {/* Hero. No "welcome to my portfolio", no typewriter, no illustration.
+          The strongest claim Hedra has is the first thing on the page. */}
+      <Container as="section" className="py-(--spacing-section)">
+        <h1>{SITE.name}</h1>
+        <p className="text-text-muted mt-5 text-[1.375rem] leading-snug">
+          {SITE.role}
         </p>
+        <p className="max-w-measure mt-8">
+          I led a 5-developer team to build EduGenie, an AI-powered e-learning
+          platform: a NestJS backend of{" "}
+          <span className="text-accent font-medium">188 REST endpoints</span>, a
+          RAG pipeline, and Stripe Connect payments — designed, built and
+          deployed in six weeks.
+        </p>
+        <div className="mt-10 flex flex-wrap items-center gap-4">
+          <Link href={`/projects/${EDUGENIE.slug}`} className="btn btn-primary">
+            View EduGenie
+          </Link>
+          {SITE.links.github !== null && (
+            <a
+              href={SITE.links.github}
+              target="_blank"
+              rel="me noopener noreferrer"
+              className="btn btn-secondary"
+            >
+              GitHub
+            </a>
+          )}
+        </div>
       </Container>
 
-      <Section number="01" title="Grid">
-        <p className="text-text-muted max-w-measure">
-          Twelve columns at 1152px, four on a phone. Every block declares a
-          span; nothing floats. The columns below are drawn only to prove they
-          exist — they are never drawn on the real pages.
-        </p>
-        <Grid className="mt-8">
-          {Array.from({ length: 12 }, (_, i) => (
-            <div
-              key={i}
-              className="border-border bg-surface h-16 border"
-              aria-hidden
-            />
+      <Section number="01" title="Selected work" id="work">
+        <div className="grid gap-16 md:grid-cols-2 md:gap-10">
+          {PROJECTS.map((project) => (
+            <Reveal key={project.slug}>
+              <ProjectCard project={project} />
+            </Reveal>
           ))}
-        </Grid>
+        </div>
       </Section>
 
-      <Section number="02" title="Type">
+      <Section number="02" title="Skills">
+        <p className="text-text-muted max-w-measure">
+          Grouped by how well I actually know them. The second group is the
+          honest one — I have shipped with all of it and would not claim to have
+          mastered any of it.
+        </p>
+        <div className="mt-10 grid gap-10 md:grid-cols-3">
+          {SKILL_GROUPS.map((group) => (
+            <div key={group.level} className="border-border border-t pt-5">
+              <h3 className="text-[1.125rem]">{group.level}</h3>
+              <p className="label mt-2 normal-case">{group.note}</p>
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {group.skills.map((skill) => (
+                  <li key={skill} className="tag">
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section number="03" title="Background">
         <ul className="border-border border-t">
-          {TYPE_SCALE.map((step) => (
+          {BACKGROUND.map((entry) => (
             <li
-              key={step.token}
-              className="border-border flex flex-wrap items-baseline justify-between gap-4 border-b py-6"
+              key={entry.title}
+              className="border-border flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b py-5"
             >
-              <span
-                className="font-medium"
-                style={{
-                  fontSize: `var(${step.token})`,
-                  letterSpacing:
-                    step.token === "--text-display" ? "-0.02em" : "-0.01em",
-                  lineHeight: 1.15,
-                }}
+              <span className="font-medium">{entry.title}</span>
+              <span className="text-text-muted mr-auto">{entry.detail}</span>
+              {entry.period !== "" && (
+                <span className="label">{entry.period}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section number="04" title="Contact">
+        <p className="max-w-measure">
+          Open to full-stack and backend roles. The fastest way to reach me is
+          email — it is a real address and I read it.
+        </p>
+        <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+          {SITE.links.email !== null && (
+            <li>
+              <a href={`mailto:${SITE.links.email}`} className="link">
+                {SITE.links.email}
+              </a>
+            </li>
+          )}
+          {SITE.links.github !== null && (
+            <li>
+              <a
+                href={SITE.links.github}
+                target="_blank"
+                rel="me noopener noreferrer"
+                className="link"
               >
-                {step.role}
-              </span>
-              <span className="label">{step.spec}</span>
+                GitHub
+              </a>
             </li>
-          ))}
-        </ul>
-
-        <div className="max-w-measure mt-12">
-          <h3>Prose sits at 68 characters</h3>
-          <p className="mt-4">
-            Body copy is 18px with a line-height of 1.7 and a measure capped at
-            68 characters. That cap is why this column stops well short of the
-            page edge: past roughly 75 characters the eye loses its place on the
-            return sweep, and an over-long line is the single most common
-            failure of layouts that call themselves minimal. Two weights on this
-            site, 400 and 500 — never 600 or 700, because a bold grotesque at
-            display size reads as shouting.
-          </p>
-          <p className="mt-6">
-            Links are the accent with a 1px underline —{" "}
-            <a href="#main" className="link">
-              like this one
-            </a>{" "}
-            — because colour on its own is not an accessible way to mark a link.
-            Sentence case everywhere. Mono labels are lowercase.
-          </p>
-        </div>
-      </Section>
-
-      <Section number="03" title="Colour">
-        <p className="text-text-muted max-w-measure">
-          Every ratio below was computed against the page background rather than
-          eyeballed. The weakest pairing on the site is the accent at 5.94:1,
-          past the 4.5:1 AA threshold for body text at any size. Light only: one
-          well-executed theme, and a whole class of contrast bugs that cannot
-          occur.
-        </p>
-        <ul className="border-border mt-8 grid border-t sm:grid-cols-2 lg:grid-cols-3">
-          {SWATCHES.map((swatch) => (
-            <li
-              key={swatch.token}
-              className="border-border flex items-center gap-4 border-r border-b p-5"
-            >
-              <span
-                aria-hidden
-                className="border-border size-10 shrink-0 border"
-                style={{ backgroundColor: swatch.value }}
-              />
-              <span className="min-w-0">
-                <span className="label block normal-case">{swatch.token}</span>
-                <span className="label block">
-                  {swatch.value} · {swatch.use}
-                  {swatch.contrast === null ? "" : ` · ${swatch.contrast}`}
-                </span>
-              </span>
+          )}
+          {SITE.links.linkedin !== null && (
+            <li>
+              <a
+                href={SITE.links.linkedin}
+                target="_blank"
+                rel="me noopener noreferrer"
+                className="link"
+              >
+                LinkedIn
+              </a>
             </li>
-          ))}
+          )}
+          <li>
+            <a href="/cv" className="link">
+              Download CV (PDF)
+            </a>
+          </li>
         </ul>
-      </Section>
-
-      <Section number="04" title="Components">
-        <h3>Stat strip</h3>
-        <p className="text-text-muted max-w-measure mt-3">
-          A row, not cards. Mono label above, number below, hairline dividers,
-          no shadows. The accent is rationed to at most two numbers per page.
-        </p>
-        <div className="mt-6">
-          <StatStrip stats={DEMO_STATS} />
-        </div>
-
-        <h3 className="mt-14">Citation line</h3>
-        <p className="text-text-muted max-w-measure mt-3">
-          The brief&rsquo;s first principle is that every claim here is
-          verifiable in one click, and that the site has to survive{" "}
-          <em>&ldquo;how much of this did AI write?&rdquo;</em>. A sentence
-          promising that does not survive the question; a visible, repeated
-          apparatus does. So a claim and its evidence are one component — hung
-          off a hairline, in mono, naming the file or link it came from.
-        </p>
-        <Cite
-          source="github.com/hedra-emad"
-          href={SITE.links.github ?? undefined}
-        >
-          <p className="max-w-measure">
-            188 REST endpoints across 32 feature modules.
-          </p>
-        </Cite>
-
-        <h3 className="mt-14">Tech tags</h3>
-        <ul className="mt-6 flex flex-wrap gap-2">
-          {TAGS.map((tag) => (
-            <li key={tag} className="tag">
-              {tag}
-            </li>
-          ))}
-        </ul>
-
-        <h3 className="mt-14">Code</h3>
-        <p className="text-text-muted max-w-measure mt-3">
-          Evidence, not a light show. Surface background, 1px hairline, 4px
-          radius, no syntax circus. Code breaks out of the 68ch measure because
-          it is not prose.
-        </p>
-        <pre className="code-block mt-6">
-          <code>{`export function chunk(text: string, maxChars = 1800, overlap = 250) {
-  // Sentence-aware windows. Never cuts mid-sentence, because an embedding
-  // of half a sentence represents half a thought.
-}`}</code>
-        </pre>
-
-        <h3 className="mt-14">Actions</h3>
-        <div className="mt-6 flex flex-wrap items-center gap-4">
-          <a href="#main" className="btn btn-primary">
-            View EduGenie
-          </a>
-          <a href="#main" className="btn btn-secondary">
-            GitHub
-          </a>
-        </div>
-      </Section>
-
-      <Section number="05" title="Motion">
-        <p className="text-text-muted max-w-measure">
-          Fade and an 8px translate, 300ms, once. That is the entire vocabulary.
-          The hidden state is gated in CSS on{" "}
-          <code className="text-[0.9em]">scripting: enabled</code> and{" "}
-          <code className="text-[0.9em]">prefers-reduced-motion</code>, so a
-          reader with JavaScript off or reduced motion on is never shown a blank
-          column waiting for an observer that will not fire.
-        </p>
-        <Reveal className="border-border bg-surface mt-8 border p-6">
-          <p className="label">this block faded in — once</p>
-        </Reveal>
       </Section>
     </>
   );
