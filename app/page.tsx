@@ -459,10 +459,10 @@ function ContactSection() {
               </div>
             )}
             <div className="card p-[26px]">
-              <div className="text-accent mb-[14px] font-mono text-[12px]">
+              <div className="text-accent mb-[10px] font-mono text-[12px]">
                 profiles
               </div>
-              <div className="flex flex-col gap-[10px]">
+              <div className="flex flex-wrap gap-x-[20px] gap-y-[8px]">
                 {SITE.links.github !== null && (
                   <a
                     href={SITE.links.github}
