@@ -82,6 +82,9 @@ export default function HomePage() {
               <Link href="#contact" className="btn btn-ghost">
                 Contact me
               </Link>
+              <a href="/cv" className="btn btn-ghost">
+                Download CV ↗
+              </a>
               <div className="ml-[6px] flex gap-[10px]">
                 {SITE.links.github !== null && (
                   <a
@@ -373,31 +376,29 @@ function JourneySection() {
           <h2 className="mt-[10px]">Education &amp; training</h2>
         </div>
       </Reveal>
-      <div className="relative pl-[34px]">
+      <div className="relative flex flex-col gap-[28px] pl-[34px]">
         <div
           aria-hidden
           className="absolute top-[6px] bottom-[6px] left-[7px] w-[2px] bg-[linear-gradient(#2ff0dd,#4d8dff,rgba(77,141,255,0.1))]"
         />
         {BACKGROUND_ITEMS.map((entry) => (
-          <Reveal key={entry.title}>
-            <div className="relative mb-[34px] last:mb-0">
-              <span
-                aria-hidden
-                className={`bg-bg absolute top-[4px] left-[-34px] size-[16px] rounded-full border-2 ${line[entry.dot]}`}
-              />
-              <div className="card card-hover p-[26px]">
-                <div
-                  className={`mb-[8px] font-mono text-[12px] ${meta[entry.dot]}`}
-                >
-                  {entry.period}
-                </div>
-                <h3 className="mb-[6px] text-[21px] font-semibold">
-                  {entry.title}
-                </h3>
-                <p className="text-text-muted text-[14px] leading-[1.6]">
-                  {entry.detail}
-                </p>
+          <Reveal key={entry.title} className="relative">
+            <span
+              aria-hidden
+              className={`bg-bg absolute top-[4px] left-[-34px] size-[16px] rounded-full border-2 ${line[entry.dot]}`}
+            />
+            <div className="card card-hover p-[28px]">
+              <div
+                className={`mb-[10px] font-mono text-[12px] ${meta[entry.dot]}`}
+              >
+                {entry.period}
               </div>
+              <h3 className="mb-[8px] text-[21px] font-semibold">
+                {entry.title}
+              </h3>
+              <p className="text-text-muted text-[14px] leading-[1.6]">
+                {entry.detail}
+              </p>
             </div>
           </Reveal>
         ))}
@@ -482,14 +483,14 @@ function ContactSection() {
                     LinkedIn ↗
                   </a>
                 )}
-                <a
-                  href={cvHref}
-                  className="text-text hover:text-accent font-medium"
-                >
-                  Download CV ↗
-                </a>
               </div>
             </div>
+            <a href={cvHref} className="card card-hover block p-[26px]">
+              <div className="text-accent mb-[10px] font-mono text-[12px]">
+                résumé
+              </div>
+              <div className="text-text font-medium">Download CV ↗</div>
+            </a>
           </div>
         </Reveal>
       </div>
