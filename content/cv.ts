@@ -1,24 +1,22 @@
 /**
- * Skills and background, transcribed from Hedra's CV. Nothing is added here
- * that is not on the CV — in particular Angular, which EduGenie's admin
- * dashboard is written in, is deliberately absent. The case study says so,
- * because the case study describes history; the skills list advertises what he
- * would take a job doing, and that is a different claim.
+ * Skills and background, transcribed from Hedra's CV and the design mock.
+ * Nothing is added that he did not list — in particular Angular, which
+ * EduGenie's admin dashboard is written in, stays absent from the skills. The
+ * case study says so, because the case study describes history; the skills list
+ * advertises what he would take a job doing, and that is a different claim.
  */
 
 export type SkillGroup = {
-  /** The honesty of these labels is the feature. A senior engineer reads
-   *  "working knowledge" as maturity, and reads an undifferentiated wall of
-   *  twenty logos as noise. */
+  /** `dot` selects the accent colour of the group's marker and tag tint. */
   readonly level: string;
-  readonly note: string;
+  readonly dot: "teal" | "blue" | "ai" | "neutral";
   readonly skills: readonly string[];
 };
 
 export const SKILL_GROUPS: readonly SkillGroup[] = [
   {
     level: "Proficient",
-    note: "Used daily, across projects, without reaching for docs.",
+    dot: "teal",
     skills: [
       "TypeScript",
       "JavaScript (ES6+)",
@@ -28,58 +26,81 @@ export const SKILL_GROUPS: readonly SkillGroup[] = [
       "React.js",
       "Next.js",
       "MongoDB & Mongoose",
-      "REST API design",
+      "REST API Design",
       "Jest",
-      "Git",
+      "Git & GitHub",
     ],
   },
   {
-    level: "Working knowledge",
-    note: "Shipped with, productive in, still learning the depths.",
+    level: "Working Knowledge",
+    dot: "blue",
     skills: [
       "GraphQL & Apollo",
       "SQL Server",
       "Redux Toolkit",
       "TanStack Query",
-      "Tailwind",
+      "Tailwind CSS",
       "Socket.IO",
       "Stripe API",
-      "Vercel / Railway",
+      "Vercel · Railway",
     ],
   },
   {
-    level: "AI engineering",
-    note: "The parts of EduGenie I owned personally.",
+    level: "AI Engineering",
+    dot: "ai",
     skills: [
       "RAG",
-      "Embeddings & semantic search",
+      "Embeddings",
+      "Semantic Search",
       "OpenAI API",
       "Google Gemini API",
-      "Prompt engineering",
+      "Prompt Engineering",
+    ],
+  },
+  {
+    level: "Practices",
+    dot: "neutral",
+    skills: [
+      "RBAC",
+      "JWT",
+      "OAuth 2.0",
+      "Secure Coding",
+      "Swagger",
+      "Code Review",
+      "Agile / Scrum",
+      "ESLint · Prettier",
     ],
   },
 ] as const;
 
 export type BackgroundEntry = {
+  readonly period: string;
   readonly title: string;
   readonly detail: string;
-  readonly period: string;
+  /** Timeline marker colour. */
+  readonly dot: "teal" | "blue" | "neutral";
 };
 
 export const BACKGROUND: readonly BackgroundEntry[] = [
   {
+    period: "2025 – 2026 · 618 hours",
     title: "ITI Intensive Code Camp",
-    detail: "618 hours — MERN stack and generative AI",
-    period: "",
+    detail:
+      "Full-Stack Web & Generative AI using MERN — TypeScript, React, Next.js, NestJS, GraphQL, MongoDB, unit testing, secure coding and GenAI development. Information Technology Institute (ITI).",
+    dot: "teal",
   },
   {
-    title: "B.Sc. Computer Science",
-    detail: "South Valley University",
-    period: "2021 – 2025",
+    period: "Aug 2022 – May 2023 · 9 months",
+    title: "Route Academy — Full-Stack Diploma",
+    detail:
+      "Intensive diploma covering front-end and back-end web fundamentals, databases, and hands-on project work.",
+    dot: "blue",
   },
   {
-    title: "Route Academy Full-Stack Diploma",
-    detail: "9 months",
-    period: "",
+    period: "Oct 2021 – Jul 2025",
+    title: "B.Sc. Computer Science & IT",
+    detail:
+      "Faculty of Computers and Information — Qena, South Valley University.",
+    dot: "neutral",
   },
 ] as const;

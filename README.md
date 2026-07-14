@@ -13,7 +13,7 @@ rather than as a bad row in a table.
 | Framework | Next.js 16 (App Router), React 19                           |
 | Language  | TypeScript, `strict` + `noUncheckedIndexedAccess`, no `any` |
 | Styling   | Tailwind CSS v4 (CSS-first config, no `tailwind.config.js`) |
-| Fonts     | `next/font` — Source Serif 4, Inter, JetBrains Mono         |
+| Fonts     | `next/font` — Space Grotesk, IBM Plex Sans, JetBrains Mono  |
 | Hosting   | Vercel                                                      |
 
 ## Run it
@@ -49,21 +49,28 @@ them, so the site never renders a placeholder link.
 
 ## Design system
 
-Swiss editorial grid, **light only** — one well-executed theme rather than two
-half-executed ones, which also removes a whole class of contrast bugs. There is
-no `dark:` variant anywhere in this repo and no theme toggle.
+Dark "AI-native" direction, ported from a Claude Design mock. Near-black ground
+(`#070a0f`), one teal accent (`#2ff0dd`) with a blue support (`#4d8dff`), glass
+surfaces, mono as the structural label face. Colour and type tokens are declared
+once in `app/globals.css` as CSS custom properties, then mapped into Tailwind
+utilities with `@theme inline`.
 
-Colour and type tokens are declared once in `app/globals.css` as CSS custom
-properties, then mapped into Tailwind utilities with `@theme inline`.
+Three families via `next/font`: **Space Grotesk** (display/headings), **IBM Plex
+Sans** (body), **JetBrains Mono** (eyebrows, dates, tags, code).
 
-Two families. **Inter Tight** carries the argument; **IBM Plex Mono** carries the
-apparatus — section numbers, stat labels, dates, tech tags, file paths and code.
-The mono is structural, not decorative, and the separation of those two registers
-is what makes the page read as engineered.
+Contrast was measured against the background, not eyeballed — the mock's dimmest
+grey (`#556170`, 3.14:1) was lifted to `#727f90` (4.87:1) so every text pairing
+clears the 4.5:1 AA floor.
 
-Run the dev server and open `/` for the full specimen: the 12-column grid, the
-type scale, swatches with their measured contrast ratios, prose at the 68ch
-measure, and every component.
+Motion is deliberately restrained: the mock's five infinite loops (float, grid
+pan, glow pulse, shimmer, cursor blink) are dropped. What remains is scroll
+reveal and a one-shot counter, both gated on `prefers-reduced-motion` and
+`scripting: enabled` so a no-JS or reduced-motion reader never waits on an
+observer.
+
+The landing page (`/`) is the single-page portfolio. `/projects/edugenie` and
+`/projects/optern` are deep case studies restyled to the same theme; each number
+in them prints the command that reproduces it (see `content/projects.ts`).
 
 ## Local development on Windows
 

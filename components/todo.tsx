@@ -20,11 +20,11 @@ export function Todo({
   children: ReactNode;
 }) {
   return (
-    <div className="my-6 border border-dashed border-[#B45309] bg-[#FEF6EC] p-5">
-      <p className="label mb-2 font-medium text-[#B45309]">
+    <div className="my-6 rounded-[12px] border border-dashed border-[#f0b429] bg-[rgba(240,180,41,0.06)] p-5">
+      <p className="mb-2 font-mono text-[0.8125rem] font-medium text-[#f6c65b]">
         todo — {who.toLowerCase()} writes this
       </p>
-      <div className="text-text-muted max-w-measure text-[0.95rem]">
+      <div className="text-text-sub max-w-measure text-[0.95rem]">
         {children}
       </div>
     </div>

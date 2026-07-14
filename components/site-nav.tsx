@@ -6,32 +6,42 @@ import { usePathname } from "next/navigation";
 import { SITE } from "@/lib/site";
 
 /**
- * The only client component in the shell. `usePathname` is what buys the active
- * state, and an active state cannot be derived on the server for a static page.
- * Scoping the directive to the nav — rather than to the whole header — keeps
- * the hydrated surface down to three links.
- *
- * The nav is set in mono: it is navigation apparatus, not argument, and on this
- * site that distinction is carried by the typeface.
+ * The only client component in the shell. `usePathname` gives the active state
+ * on the case-study routes, which cannot be derived on the server for a static
+ * page. Scoping the directive to the nav keeps the hydrated surface to a few
+ * links. Set in mono — this is navigation apparatus, not argument.
  */
 export function SiteNav() {
   const pathname = usePathname();
 
   return (
     <nav aria-label="Primary">
-      <ul className="flex items-center gap-6">
+      <ul className="flex items-center gap-[clamp(14px,2.4vw,34px)] font-mono text-[14px]">
         {SITE.nav.map((item) => {
           const target = item.href.split("#")[0] ?? "/";
           const isActive =
-            target === "/" ? pathname === "/" : pathname.startsWith(target);
+            pathname !== "/" && target !== "/" && pathname.startsWith(target);
+
+          if (item.cta === true) {
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="text-accent rounded-[8px] border border-[rgba(47,240,221,0.4)] bg-[rgba(47,240,221,0.06)] px-[16px] py-[8px] transition-colors hover:border-[rgba(47,240,221,0.7)] hover:bg-[rgba(47,240,221,0.16)]"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          }
 
           return (
             <li key={item.href}>
               <Link
                 href={item.href}
                 aria-current={isActive ? "page" : undefined}
-                className={`label hover:text-accent transition-colors ${
-                  isActive ? "text-accent" : ""
+                className={`hover:text-accent transition-colors ${
+                  isActive ? "text-accent" : "text-text-muted"
                 }`}
               >
                 {item.label}

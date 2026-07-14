@@ -9,8 +9,8 @@
 export type NavItem = {
   readonly href: string;
   readonly label: string;
-  /** External links get rel/target and a visual affordance. */
-  readonly external?: boolean;
+  /** The last item renders as a bordered pill instead of a plain link. */
+  readonly cta?: boolean;
 };
 
 export type SiteConfig = {
@@ -20,10 +20,12 @@ export type SiteConfig = {
   readonly url: string | null;
   readonly nav: readonly NavItem[];
   readonly links: {
-    /* TODO(hedra): supply these — see PORTFOLIO_BRIEF.md §10. */
     readonly github: string | null;
     readonly linkedin: string | null;
     readonly email: string | null;
+    /** Supplied from Hedra's CV via the design mock. */
+    readonly phone: string | null;
+    readonly location: string | null;
   };
 };
 
@@ -31,14 +33,19 @@ export const SITE: SiteConfig = {
   name: "Hedra Emad Fawzy",
   role: "Full-Stack Developer — TypeScript, NestJS, React & Next.js",
   url: "https://hedra-emad.vercel.app",
+  // Single-page nav: each item scrolls to a section on the landing page. From a
+  // case-study route the leading "/" navigates home first, then to the anchor.
   nav: [
-    { href: "/#work", label: "Work" },
-    { href: "/about", label: "About" },
-    { href: "/cv", label: "CV" },
+    { href: "/#work", label: "work" },
+    { href: "/#skills", label: "skills" },
+    { href: "/#journey", label: "journey" },
+    { href: "/#contact", label: "contact", cta: true },
   ],
   links: {
     github: "https://github.com/hedra-emad",
     linkedin: "https://www.linkedin.com/in/hedra-emad",
     email: "emadhedra4@gmail.com",
+    phone: "+201028352103",
+    location: "Cairo, Egypt",
   },
 } as const;
