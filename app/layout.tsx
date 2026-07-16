@@ -6,8 +6,6 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SITE } from "@/lib/site";
 
-
-
 /**
  * Three families, self-hosted by next/font at build time — no request to
  * Google, no render-blocking stylesheet, one preloaded woff2 each, and fallback
