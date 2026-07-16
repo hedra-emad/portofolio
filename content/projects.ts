@@ -143,11 +143,11 @@ export const OPTERN: Project = {
   period: "Nov 2024 – Jun 2025",
   summary:
     "A virtual job-preparation platform: AI mock interviews, an AI CV builder, and virtual collaboration rooms.",
-  stack: ["next.js", "typescript", "graphql", "apollo client", "redux toolkit"],
+  stack: ["next.js", "typescript", "redux toolkit"],
   repos: [
     {
       label: "Optern-Frontend",
-      href: "https://github.com/AbdelattyBadwy16/Optern-Frontend",
+      href: "https://github.com/hedra-emad/Optern-Frontend",
     },
   ],
   // optern.vercel.app returns 404. No live link until there is a live app.

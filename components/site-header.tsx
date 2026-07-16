@@ -9,7 +9,7 @@ import { SiteNav } from "@/components/site-nav";
  */
 export function SiteHeader() {
   return (
-    <header className="border-border sticky top-0 z-50 border-b bg-[rgba(7,10,15,0.6)] backdrop-blur-xl">
+    <header className="border-border sticky top-0 z-50 border-b bg-[rgba(247,249,252,0.72)] backdrop-blur-xl">
       <div className="max-w-wide mx-auto flex items-center justify-between gap-6 px-[clamp(20px,5vw,72px)] py-[18px]">
         <Link
           href="/"
@@ -17,7 +17,7 @@ export function SiteHeader() {
         >
           <span
             aria-hidden
-            className="bg-accent size-[10px] rounded-[2px] shadow-[0_0_12px_var(--accent)]"
+            className="size-[10px] rounded-[2px] bg-[var(--accent-strong)]"
           />
           Hedra<span className="text-accent">.</span>dev
         </Link>

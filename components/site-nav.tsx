@@ -27,7 +27,7 @@ export function SiteNav() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-accent rounded-[8px] border border-[rgba(47,240,221,0.4)] bg-[rgba(47,240,221,0.06)] px-[16px] py-[8px] transition-colors hover:border-[rgba(47,240,221,0.7)] hover:bg-[rgba(47,240,221,0.16)]"
+                  className="text-accent rounded-[8px] border border-[rgba(20,184,166,0.4)] bg-[rgba(20,184,166,0.08)] px-[16px] py-[8px] transition-colors hover:border-[rgba(20,184,166,0.7)] hover:bg-[rgba(20,184,166,0.16)]"
                 >
                   {item.label}
                 </Link>

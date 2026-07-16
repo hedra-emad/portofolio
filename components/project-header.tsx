@@ -5,12 +5,32 @@ import type { Project } from "@/content/projects";
  * Role, team, dates and every link, above the fold. A recruiter reading a case
  * study wants to know what this person did and where the code is before they
  * commit to the prose.
+ *
+ * The case studies live inline on the single-page site, so the project name is
+ * an `h2` (a major page section), not an `h1` — the hero owns the page's one
+ * `h1`. When a `number` is passed it renders the same `// 03 — case study`
+ * eyebrow the landing sections use, so the whole page reads as one sequence.
  */
-export function ProjectHeader({ project }: { project: Project }) {
+export function ProjectHeader({
+  project,
+  number,
+}: {
+  project: Project;
+  number?: string;
+}) {
   return (
     <Container as="header" className="py-(--spacing-section)">
-      <p className="label mb-6">case study</p>
-      <h1>{project.name}</h1>
+      {number === undefined ? (
+        <p className="label mb-6">case study</p>
+      ) : (
+        <p className="eyebrow mb-4" aria-hidden>
+          {"// "}
+          {number} — case study
+        </p>
+      )}
+      <h2 className="text-[length:var(--text-display)] tracking-[-0.035em]">
+        {project.name}
+      </h2>
 
       <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-3">
         <div>

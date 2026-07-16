@@ -1,18 +1,21 @@
+import Image from "next/image";
 import Link from "next/link";
 
+import { EduGenieCaseStudy } from "@/components/case-study/edugenie";
+import { OpternCaseStudy } from "@/components/case-study/optern";
 import { Counter } from "@/components/counter";
 import { Reveal } from "@/components/reveal";
-import { GitHubIcon, LinkedInIcon } from "@/components/social-icons";
+import { GitHubIcon, LinkedInIcon, MailIcon } from "@/components/social-icons";
 import { BACKGROUND as BACKGROUND_ITEMS, SKILL_GROUPS } from "@/content/cv";
 import { METRICS } from "@/content/metrics";
-import { EDUGENIE, OPTERN } from "@/content/projects";
+import { EDUGENIE } from "@/content/projects";
 import { SITE } from "@/lib/site";
 
 const DOT: Record<string, string> = {
-  teal: "bg-accent shadow-[0_0_10px_var(--accent)]",
-  blue: "bg-accent-2 shadow-[0_0_10px_var(--accent-2)]",
-  ai: "bg-accent rounded-full shadow-[0_0_12px_var(--accent)]",
-  neutral: "bg-text-muted shadow-[0_0_10px_rgba(154,167,184,0.6)]",
+  teal: "bg-[var(--accent-strong)]",
+  blue: "bg-accent-2",
+  ai: "bg-[var(--accent-strong)] rounded-full",
+  neutral: "bg-text-muted",
 };
 
 const TAG_VARIANT: Record<string, string> = {
@@ -30,69 +33,53 @@ export default function HomePage() {
       {/* ---------------------------------------------------------------- HERO */}
       <section
         id="top"
-        className="relative flex min-h-[92vh] flex-col justify-center overflow-hidden px-[clamp(20px,5vw,72px)] pt-[120px] pb-[90px]"
+        className="relative flex min-h-[88vh] flex-col justify-center overflow-hidden px-[clamp(20px,5vw,72px)] pt-[120px] pb-[80px]"
       >
         {/* Static grid overlay, masked to a soft vignette. No pan animation. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.028)_1px,transparent_1px)] [mask-image:radial-gradient(circle_at_50%_40%,#000_20%,transparent_78%)] bg-[size:60px_60px]"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.04)_1px,transparent_1px)] [mask-image:radial-gradient(circle_at_50%_40%,#000_20%,transparent_78%)] bg-[size:60px_60px]"
         />
 
-        <div className="relative max-w-[1100px]">
-          <Reveal>
-            <p className="text-accent mb-[30px] inline-flex items-center gap-[10px] rounded-full border border-[rgba(47,240,221,0.3)] bg-[rgba(47,240,221,0.05)] px-[14px] py-[7px] font-mono text-[13px]">
-              <span
-                aria-hidden
-                className="bg-accent size-[7px] rounded-full shadow-[0_0_10px_var(--accent)]"
-              />
-              Available for full-stack / backend roles
-            </p>
-          </Reveal>
+        <div className="relative mx-auto grid w-full max-w-[1180px] items-center gap-[clamp(36px,5vw,64px)] lg:grid-cols-[1fr_0.82fr]">
+          <div>
+            <Reveal>
+              <p className="label mb-4">Hi, I am</p>
+            </Reveal>
 
-          <Reveal>
-            <h1 className="mb-[26px] leading-[0.98]">
-              Full-Stack Developer
-              <br />
-              building <span className="gradient-text">AI-native</span> products
-            </h1>
-          </Reveal>
+            <Reveal>
+              <h1 className="mb-[18px] leading-[0.92]">
+                Hedra Emad
+                <br />
+                Fawzy
+              </h1>
+            </Reveal>
 
-          <Reveal>
-            <p className="text-text-muted text-lead mb-[40px] max-w-[660px] leading-[1.65]">
-              I&rsquo;m{" "}
-              <strong className="text-text font-semibold">
-                Hedra Emad Fawzy
-              </strong>{" "}
-              — working in TypeScript across the Node.js and React ecosystems. I
-              led a 5-developer team as Team Leader on{" "}
-              <strong className="text-accent font-semibold">EduGenie</strong>,
-              and trained through the{" "}
-              <strong className="text-text font-semibold">
-                ITI Intensive Code Camp
-              </strong>{" "}
-              (618 hours, full-stack and generative AI).
-            </p>
-          </Reveal>
+            <Reveal>
+              <p className="text-text-muted mb-[36px] font-mono text-[clamp(15px,1.6vw,19px)]">
+                Full-Stack Developer <span className="text-text-dim">·</span>{" "}
+                Backend &amp; AI
+              </p>
+            </Reveal>
 
-          <Reveal>
-            <div className="flex flex-wrap items-center gap-4">
-              <Link href="#work" className="btn btn-primary">
-                View my work →
-              </Link>
-              <Link href="#contact" className="btn btn-ghost">
-                Contact me
-              </Link>
-              <a href="/cv" className="btn btn-ghost">
-                Download CV ↗
-              </a>
-              <div className="ml-[6px] flex gap-[10px]">
+            <Reveal>
+              <div className="mb-[34px] flex items-center gap-[12px]">
+                {SITE.links.email !== null && (
+                  <a
+                    href={`mailto:${SITE.links.email}`}
+                    aria-label="Email"
+                    className="text-text-sub hover:text-accent border-border bg-surface flex size-[48px] items-center justify-center rounded-[12px] border transition-colors hover:border-[rgba(20,184,166,0.5)]"
+                  >
+                    <MailIcon />
+                  </a>
+                )}
                 {SITE.links.github !== null && (
                   <a
                     href={SITE.links.github}
                     target="_blank"
                     rel="me noopener noreferrer"
                     aria-label="GitHub"
-                    className="text-text-sub hover:text-accent flex size-[50px] items-center justify-center rounded-[12px] border border-[rgba(255,255,255,0.12)] bg-[rgba(255,255,255,0.02)] transition-colors hover:border-[rgba(47,240,221,0.5)]"
+                    className="text-text-sub hover:text-accent border-border bg-surface flex size-[48px] items-center justify-center rounded-[12px] border transition-colors hover:border-[rgba(20,184,166,0.5)]"
                   >
                     <GitHubIcon />
                   </a>
@@ -103,12 +90,43 @@ export default function HomePage() {
                     target="_blank"
                     rel="me noopener noreferrer"
                     aria-label="LinkedIn"
-                    className="text-text-sub hover:text-accent flex size-[50px] items-center justify-center rounded-[12px] border border-[rgba(255,255,255,0.12)] bg-[rgba(255,255,255,0.02)] transition-colors hover:border-[rgba(47,240,221,0.5)]"
+                    className="text-text-sub hover:text-accent border-border bg-surface flex size-[48px] items-center justify-center rounded-[12px] border transition-colors hover:border-[rgba(20,184,166,0.5)]"
                   >
                     <LinkedInIcon />
                   </a>
                 )}
               </div>
+            </Reveal>
+
+            <Reveal>
+              <div className="flex flex-wrap items-center gap-4">
+                <Link href="#work" className="btn btn-primary">
+                  View my work →
+                </Link>
+                <a href="/cv" className="btn btn-ghost">
+                  Download CV ↗
+                </a>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Background-removed cut-out (public/profile-cutout.png), bleeding
+              off a soft tinted backdrop blob — no frame. Until that PNG exists
+              the image is broken; drop the file in to light it up. */}
+          <Reveal className="relative flex justify-center self-end lg:justify-end">
+            <div className="relative w-full max-w-[400px]">
+              <div
+                aria-hidden
+                className="absolute inset-x-2 top-[-20px] bottom-0 -z-10 rounded-t-[40px] rounded-b-[24px] bg-[radial-gradient(120%_90%_at_50%_10%,rgba(20,184,166,0.18),rgba(37,99,235,0.08)_55%,transparent_80%)]"
+              />
+              <Image
+                src="/hello.png"
+                alt="Hedra Emad Fawzy"
+                width={960}
+                height={400}
+                priority
+                className="h-auto w-full object-contain drop-shadow-[0_18px_36px_rgba(15,23,42,0.18)]"
+              />
             </div>
           </Reveal>
         </div>
@@ -153,7 +171,7 @@ export default function HomePage() {
               <div
                 className={`card card-hover h-full p-[30px] ${
                   group.dot === "ai"
-                    ? "border-[rgba(47,240,221,0.28)] bg-[linear-gradient(160deg,rgba(47,240,221,0.06),rgba(77,141,255,0.03))]"
+                    ? "border-[rgba(20,184,166,0.35)] bg-[linear-gradient(160deg,rgba(20,184,166,0.06),rgba(37,99,235,0.03))]"
                     : ""
                 }`}
               >
@@ -218,7 +236,7 @@ export default function HomePage() {
                 </p>
                 <div className="flex flex-wrap items-center gap-[14px]">
                   <Link
-                    href={`/projects/${EDUGENIE.slug}`}
+                    href="#edugenie"
                     className="btn btn-primary text-[14px]"
                   >
                     Read the case study →
@@ -237,10 +255,10 @@ export default function HomePage() {
               </div>
 
               <div className="ai-glow p-[26px]">
-                <div className="mb-[18px] inline-flex items-center gap-[9px] rounded-full border border-[rgba(47,240,221,0.6)] bg-[rgba(47,240,221,0.12)] px-[12px] py-[6px] font-mono text-[12px] text-[#d7fbf6]">
+                <div className="text-accent mb-[18px] inline-flex items-center gap-[9px] rounded-full border border-[rgba(20,184,166,0.4)] bg-[rgba(20,184,166,0.12)] px-[12px] py-[6px] font-mono text-[12px]">
                   <span
                     aria-hidden
-                    className="bg-accent size-[7px] rounded-full shadow-[0_0_12px_var(--accent)]"
+                    className="size-[7px] rounded-full bg-[var(--accent-strong)]"
                   />
                   AI features
                 </div>
@@ -268,7 +286,7 @@ export default function HomePage() {
                   ].map((item, i) => (
                     <li
                       key={i}
-                      className="flex gap-[11px] text-[14px] leading-[1.45] text-[#d5dde8]"
+                      className="text-text-sub flex gap-[11px] text-[14px] leading-[1.45]"
                     >
                       <span aria-hidden className="text-accent font-mono">
                         ▹
@@ -288,11 +306,11 @@ export default function HomePage() {
             <div className="grid grid-cols-[repeat(auto-fit,minmax(290px,1fr))] items-center gap-[clamp(24px,3vw,48px)]">
               <div>
                 <div className="mb-[16px] flex flex-wrap items-center gap-[12px]">
-                  <span className="text-accent-2 rounded-[6px] border border-[rgba(77,141,255,0.4)] bg-[rgba(77,141,255,0.08)] px-[11px] py-[5px] font-mono text-[12px] font-semibold">
+                  <span className="text-accent-2 rounded-[6px] border border-[rgba(37,99,235,0.35)] bg-[rgba(37,99,235,0.08)] px-[11px] py-[5px] font-mono text-[12px] font-semibold">
                     front-end
                   </span>
                   <span className="text-text-muted font-mono text-[12px]">
-                    Next.js · GraphQL · Apollo · Redux
+                    Next.js · TypeScript · Redux Toolkit
                   </span>
                 </div>
                 <h3 className="mb-[14px]">Optern</h3>
@@ -304,15 +322,12 @@ export default function HomePage() {
                   </strong>
                   , built the{" "}
                   <strong className="text-text-sub">collaboration rooms</strong>{" "}
-                  (workspace and sprint boards), the full auth flow, and
-                  consumed{" "}
-                  <strong className="text-text-sub">GraphQL APIs</strong> via
-                  Apollo Client within a layered architecture.
+                  (workspace and sprint boards) and the full auth flow, over a{" "}
+                  <strong className="text-text-sub">REST backend</strong>{" "}
+                  consumed through a hand-rolled <code>HttpClient</code> within
+                  a layered architecture.
                 </p>
-                <Link
-                  href={`/projects/${OPTERN.slug}`}
-                  className="btn btn-ghost text-[14px]"
-                >
+                <Link href="#optern" className="btn btn-ghost text-[14px]">
                   Read the case study →
                 </Link>
               </div>
@@ -345,6 +360,10 @@ export default function HomePage() {
         </Reveal>
       </section>
 
+      {/* -------------------------------------------------- CASE STUDIES (03, 04) */}
+      <EduGenieCaseStudy />
+      <OpternCaseStudy />
+
       {/* ------------------------------------------------------------ JOURNEY */}
       <JourneySection />
 
@@ -356,8 +375,8 @@ export default function HomePage() {
 
 function JourneySection() {
   const line: Record<string, string> = {
-    teal: "border-accent shadow-[0_0_14px_rgba(47,240,221,0.6)]",
-    blue: "border-accent-2 shadow-[0_0_14px_rgba(77,141,255,0.5)]",
+    teal: "border-[var(--accent-strong)]",
+    blue: "border-accent-2",
     neutral: "border-text-muted",
   };
   const meta: Record<string, string> = {
@@ -372,14 +391,14 @@ function JourneySection() {
     >
       <Reveal>
         <div className="mb-[46px]">
-          <p className="eyebrow">{"// 03 — the journey"}</p>
+          <p className="eyebrow">{"// 05 — the journey"}</p>
           <h2 className="mt-[10px]">Education &amp; training</h2>
         </div>
       </Reveal>
       <div className="relative flex flex-col gap-[28px] pl-[34px]">
         <div
           aria-hidden
-          className="absolute top-[6px] bottom-[6px] left-[7px] w-[2px] bg-[linear-gradient(#2ff0dd,#4d8dff,rgba(77,141,255,0.1))]"
+          className="absolute top-[6px] bottom-[6px] left-[7px] w-[2px] bg-[linear-gradient(#14b8a6,#2563eb,rgba(37,99,235,0.08))]"
         />
         {BACKGROUND_ITEMS.map((entry) => (
           <Reveal key={entry.title} className="relative">
@@ -417,7 +436,7 @@ function ContactSection() {
       <div className="mx-auto max-w-[1100px]">
         <Reveal>
           <div className="mb-[50px] text-center">
-            <p className="eyebrow">{"// 04 — let’s build something"}</p>
+            <p className="eyebrow">{"// 06 — let’s build something"}</p>
             <h2 className="mt-[14px] text-[clamp(32px,6vw,68px)] leading-[1.02]">
               Get in touch<span className="text-accent">_</span>
             </h2>
