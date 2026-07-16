@@ -1,3 +1,4 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 
@@ -5,7 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SITE } from "@/lib/site";
 
-import "./globals.css";
+
 
 /**
  * Three families, self-hosted by next/font at build time — no request to

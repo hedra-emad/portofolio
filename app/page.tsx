@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { EduGenieCaseStudy } from "@/components/case-study/edugenie";
-import { OpternCaseStudy } from "@/components/case-study/optern";
 import { Counter } from "@/components/counter";
 import { Reveal } from "@/components/reveal";
 import { GitHubIcon, LinkedInIcon, MailIcon } from "@/components/social-icons";
@@ -236,7 +234,7 @@ export default function HomePage() {
                 </p>
                 <div className="flex flex-wrap items-center gap-[14px]">
                   <Link
-                    href="#edugenie"
+                    href="/projects/edugenie"
                     className="btn btn-primary text-[14px]"
                   >
                     Read the case study →
@@ -327,7 +325,10 @@ export default function HomePage() {
                   consumed through a hand-rolled <code>HttpClient</code> within
                   a layered architecture.
                 </p>
-                <Link href="#optern" className="btn btn-ghost text-[14px]">
+                <Link
+                  href="/projects/optern"
+                  className="btn btn-ghost text-[14px]"
+                >
                   Read the case study →
                 </Link>
               </div>
@@ -359,10 +360,6 @@ export default function HomePage() {
           </div>
         </Reveal>
       </section>
-
-      {/* -------------------------------------------------- CASE STUDIES (03, 04) */}
-      <EduGenieCaseStudy />
-      <OpternCaseStudy />
 
       {/* ------------------------------------------------------------ JOURNEY */}
       <JourneySection />
@@ -427,7 +424,6 @@ function JourneySection() {
 }
 
 function ContactSection() {
-  const cvHref = "/cv";
   return (
     <section
       id="contact"
@@ -504,12 +500,6 @@ function ContactSection() {
                 )}
               </div>
             </div>
-            <a href={cvHref} className="card card-hover block p-[26px]">
-              <div className="text-accent mb-[10px] font-mono text-[12px]">
-                résumé
-              </div>
-              <div className="text-text font-medium">Download CV ↗</div>
-            </a>
           </div>
         </Reveal>
       </div>

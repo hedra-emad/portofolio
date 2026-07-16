@@ -101,11 +101,6 @@ export const EDUGENIE: Project = {
       source: "src/**/*.module.ts, excluding app.module.ts",
     },
     {
-      label: "jest tests, green",
-      value: "140",
-      source: "it() and test() across 33 *.spec.ts files",
-    },
-    {
       label: "roles with rbac",
       value: "4",
       source: "student, instructor, admin, superadmin",
@@ -114,12 +109,12 @@ export const EDUGENIE: Project = {
 } as const;
 
 /**
- * Student-app figures. Kept separate from the headline strip so the four
- * numbers above stay the four numbers that matter.
+ * Student-app figures. Kept separate from the headline strip so the three
+ * numbers above stay the three numbers that matter.
  *
  * The brief claimed "160+ components". That number is not reproducible: the
  * app has 167 .tsx files in total, but that count includes pages, layouts and
- * route files. Counting actual component files under src/components gives 120.
+ * route files. Counting actual component files under src/components gives 83.
  * The smaller, true number is on the site.
  */
 export const EDUGENIE_WEB_STATS: readonly Stat[] = [
@@ -130,7 +125,7 @@ export const EDUGENIE_WEB_STATS: readonly Stat[] = [
   },
   {
     label: "components",
-    value: "120",
+    value: "83",
     source: "src/components/**/*.tsx",
   },
 ] as const;
@@ -152,16 +147,12 @@ export const OPTERN: Project = {
   ],
   // optern.vercel.app returns 404. No live link until there is a live app.
   live: [],
-  stats: [
-    {
-      label: "merged pull requests",
-      value: "48",
-      accent: true,
-      // This one is checkable in a single click, by anyone, right now.
-      source:
-        "github.com/AbdelattyBadwy16/Optern-Frontend/pulls?q=is:pr+author:hedra-emad+is:merged",
-    },
-  ],
+  // The merged-PR count is verifiable only on the team origin
+  // (AbdelattyBadwy16/Optern-Frontend); the public repo linked here is the
+  // fork, which has zero PRs. Rather than cite a second repo, the stat is
+  // dropped and the count stays in prose, where it is not presented as a
+  // one-click-checkable figure.
+  stats: [],
 } as const;
 
 export const PROJECTS: readonly Project[] = [EDUGENIE, OPTERN];

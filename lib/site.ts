@@ -39,7 +39,8 @@ export const SITE: SiteConfig = {
     { href: "/#work", label: "work" },
     { href: "/#skills", label: "skills" },
     { href: "/#journey", label: "journey" },
-    { href: "/#contact", label: "contact", cta: true },
+    { href: "/#contact", label: "contact" },
+    { href: "/cv", label: "Download CV ↗", cta: true },
   ],
   links: {
     github: "https://github.com/hedra-emad",

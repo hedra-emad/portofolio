@@ -13,13 +13,13 @@ type SectionProps = {
 };
 
 /**
- * A numbered case-study section: `// 03.1 — architecture` in mono teal above the
- * h3, matching the landing page's eyebrow.
+ * A numbered case-study section: `// 01 — architecture` in mono teal above the
+ * h2, matching the landing page's eyebrow.
  *
- * An `h3`: on the single-page site the project name (ProjectHeader) is the `h2`,
- * so its sections nest one level below it.
+ * An `h2`: the project name (ProjectHeader) is the page's `h1`, so its sections
+ * nest one level below it.
  *
- * The eyebrow is `aria-hidden`: it restates the h3, which is the intended
+ * The eyebrow is `aria-hidden`: it restates the h2, which is the intended
  * visual device, but a screen reader announcing the number then the heading is
  * noise. Sighted readers get the label; assistive tech gets one clean heading.
  */
@@ -34,7 +34,7 @@ export function Section({ number, title, id, children }: SectionProps) {
           {"// "}
           {number} — {title.toLowerCase()}
         </p>
-        <h3>{title}</h3>
+        <h2>{title}</h2>
         <div className="mt-10">{children}</div>
       </Container>
     </section>

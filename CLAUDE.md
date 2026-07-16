@@ -35,11 +35,11 @@ content lives in typed TypeScript under `content/` and `lib/`. A wrong claim
 surfaces as a type error or failed build, not a bad row. This is the core
 constraint: content is code.
 
-- `app/` — App Router. The site is a **single page**: `/` is the entire
-  portfolio (hero → metrics → skills → work → EduGenie → Optern → journey →
-  contact). The two case studies render inline from `components/case-study/*`
-  behind the `#edugenie` / `#optern` anchors — there are no `/projects/*` or
-  `/about` routes. `app/globals.css` is the whole design system.
+- `app/` — App Router. `/` is the home portfolio (hero → metrics → skills → work
+  → journey → contact); the two case studies are their own routes,
+  `/projects/edugenie` and `/projects/optern`, each rendering a
+  `components/case-study/*` component and linked from the home work cards. There
+  is no `/about` route. `app/globals.css` is the whole design system.
 - `components/` — shared UI. Server components unless a hook forces `"use client"`.
 - `content/` — project data (`projects.ts`), CV (`cv.ts`), metrics (`metrics.ts`).
 - `lib/site.ts` — single source of truth for site-wide facts (name, nav, contact).

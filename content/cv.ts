@@ -35,7 +35,7 @@ export const SKILL_GROUPS: readonly SkillGroup[] = [
     level: "Working Knowledge",
     dot: "blue",
     skills: [
-      "GraphQL & Apollo",
+      "GraphQL",
       "SQL Server",
       "Redux Toolkit",
       "TanStack Query",

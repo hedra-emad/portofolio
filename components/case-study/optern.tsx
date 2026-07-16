@@ -1,21 +1,69 @@
 import { CodeSample } from "@/components/code-sample";
 import { ProjectHeader } from "@/components/project-header";
+import { Screens, type Shot } from "@/components/case-study/screens";
 import { Section } from "@/components/section";
-import { StatStrip } from "@/components/stat-strip";
 import { OPTERN } from "@/content/projects";
 
 const REPO = "https://github.com/hedra-emad/Optern-Frontend/blob/master";
 
+const SHOTS: readonly Shot[] = [
+  {
+    src: "/shots/optern/landing.jpg",
+    alt: "Optern landing page",
+    caption: "The Optern landing page and AI assistant.",
+  },
+  {
+    src: "/shots/optern/rooms-home.jpg",
+    alt: "Optern rooms home",
+    caption: "Home — your created and joined rooms.",
+  },
+  {
+    src: "/shots/optern/create-room.jpg",
+    alt: "Optern create-room form",
+    caption: "Creating a collaboration room — tracks, stacks, skills.",
+  },
+  {
+    src: "/shots/optern/room-overview.jpg",
+    alt: "Optern room dashboard",
+    caption: "A room's dashboard — recent sprints, tasks, and summary.",
+  },
+  {
+    src: "/shots/optern/new-workspace.jpg",
+    alt: "Optern new workspace",
+    caption: "Spinning up a workspace inside a room.",
+  },
+  {
+    src: "/shots/optern/new-sprint.jpg",
+    alt: "Optern new sprint",
+    caption: "Adding a sprint to a workspace.",
+  },
+  {
+    src: "/shots/optern/new-task.jpg",
+    alt: "Optern new task on the sprint board",
+    caption: "Creating a task on the sprint board — assigned and scheduled.",
+  },
+  {
+    src: "/shots/optern/interview-select.jpg",
+    alt: "Optern interview type selection",
+    caption: "Choosing an interview type — AI or peer-to-peer.",
+  },
+  {
+    src: "/shots/optern/interview-live.jpg",
+    alt: "Optern live peer-to-peer interview",
+    caption: "A live peer-to-peer coding interview, timed, with video.",
+  },
+];
+
 /**
- * The Optern case study, rendered inline as section `04` of the single-page
- * site. Its internal sections are numbered `04.x`.
+ * The Optern case study, rendered on its own route (`/projects/optern`).
+ * `ProjectHeader` is the page `h1`, `Section`s are `h2` (numbered 01–04).
  */
 export function OpternCaseStudy() {
   return (
-    <section id="optern" className="scroll-mt-24">
-      <ProjectHeader project={OPTERN} number="04" />
+    <>
+      <ProjectHeader project={OPTERN} />
 
-      <Section number="04.1" title="What it is">
+      <Section number="01" title="What it is">
         <p className="max-w-measure">
           A virtual job-preparation platform: AI mock interviews, an AI CV
           builder, and virtual collaboration rooms where teams run a workspace
@@ -23,7 +71,7 @@ export function OpternCaseStudy() {
         </p>
       </Section>
 
-      <Section number="04.2" title="What I built">
+      <Section number="02" title="What I built">
         <p className="max-w-measure">
           Front-end developer in a team of four. I shipped 48 merged pull
           requests covering the blog module, the user profile, notifications,
@@ -36,17 +84,19 @@ export function OpternCaseStudy() {
           state, laid out in a domain / application / infrastructure /
           presentation architecture.
         </p>
-        <div className="mt-10">
-          <StatStrip stats={OPTERN.stats} />
-        </div>
-        <p className="text-text-muted max-w-measure mt-6">
-          That number is a link. It opens the merged-PR search on the team
-          repository, filtered to my username — the count is GitHub&rsquo;s, not
-          mine.
-        </p>
       </Section>
 
-      <Section number="04.3" title="Engineering decision">
+      <Section number="03" title="Screens">
+        <p className="text-text-muted max-w-measure">
+          The Optern app — collaboration rooms and sprint boards, the interview
+          flows, and the CV builder.
+        </p>
+        <div className="mt-10">
+          <Screens items={SHOTS} />
+        </div>
+      </Section>
+
+      <Section number="04" title="Engineering decision">
         <p className="text-text-muted max-w-measure">
           One is enough here. The obvious candidate is the layered architecture:
           a domain / application / infrastructure / presentation split is a
@@ -104,6 +154,6 @@ export default store;`}
           which folder a change belongs in was worth the extra files.
         </p>
       </Section>
-    </section>
+    </>
   );
 }

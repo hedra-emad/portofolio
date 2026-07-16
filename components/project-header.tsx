@@ -6,10 +6,10 @@ import type { Project } from "@/content/projects";
  * study wants to know what this person did and where the code is before they
  * commit to the prose.
  *
- * The case studies live inline on the single-page site, so the project name is
- * an `h2` (a major page section), not an `h1` — the hero owns the page's one
- * `h1`. When a `number` is passed it renders the same `// 03 — case study`
- * eyebrow the landing sections use, so the whole page reads as one sequence.
+ * Each case study is its own route, so the project name is the page's `h1`.
+ * When a `number` is passed it renders a `// 03 — case study` eyebrow instead of
+ * the plain "case study" label (used when the header sits inside a larger
+ * numbered sequence).
  */
 export function ProjectHeader({
   project,
@@ -28,9 +28,7 @@ export function ProjectHeader({
           {number} — case study
         </p>
       )}
-      <h2 className="text-[length:var(--text-display)] tracking-[-0.035em]">
-        {project.name}
-      </h2>
+      <h1>{project.name}</h1>
 
       <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-3">
         <div>

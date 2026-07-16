@@ -18,7 +18,7 @@ export function ArchitectureDiagram() {
       >
         <title id="arch-title">EduGenie system architecture</title>
         <desc id="arch-desc">
-          Three client applications — a Next.js student web app, an Angular
+          Two client applications — a Next.js student web app and an Angular
           admin dashboard — both call a NestJS REST API. The API reads and
           writes MongoDB, and integrates four external services: Stripe Connect
           for payments, OpenAI and Gemini for the RAG pipeline, Cloudinary for

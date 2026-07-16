@@ -1,24 +1,68 @@
 import { ArchitectureDiagram } from "@/components/architecture-diagram";
 import { CodeSample } from "@/components/code-sample";
 import { ProjectHeader } from "@/components/project-header";
+import { Screens, type Shot } from "@/components/case-study/screens";
 import { Section } from "@/components/section";
 import { StatStrip } from "@/components/stat-strip";
 import { EDUGENIE, EDUGENIE_WEB_STATS } from "@/content/projects";
 
 const API = "https://github.com/hedra-emad/edugenie-api/blob/main";
 
+const SHOTS: readonly Shot[] = [
+  {
+    src: "/shots/edugenie/student-landing.png",
+    alt: "EduGenie student landing page",
+    caption: "The student landing — search, trending tracks, featured courses.",
+  },
+  {
+    src: "/shots/edugenie/course-page.png",
+    alt: "EduGenie course detail page",
+    caption: "A course page — curriculum, certificate, and the AI chatbot.",
+  },
+  {
+    src: "/shots/edugenie/onboarding.png",
+    alt: "EduGenie onboarding wizard",
+    caption: "Onboarding — the AI maps a learning path to your goals.",
+  },
+  {
+    src: "/shots/edugenie/roadmap-advisor.png",
+    alt: "EduGenie AI roadmap advisor",
+    caption: "The AI Roadmap Advisor — a full plan, bought in one click.",
+  },
+  {
+    src: "/shots/edugenie/instructor-earnings.png",
+    alt: "EduGenie instructor earnings and payouts",
+    caption:
+      "Instructor earnings & Stripe Connect payouts — the 65 / 35 fee split.",
+  },
+  {
+    src: "/shots/edugenie/course-builder.png",
+    alt: "EduGenie instructor course builder",
+    caption: "The course builder — settings, learning goals, requirements.",
+  },
+  {
+    src: "/shots/edugenie/admin-approvals.png",
+    alt: "EduGenie admin course approvals",
+    caption: "The admin dashboard — the course-approval queue.",
+  },
+  {
+    src: "/shots/edugenie/checkout-success.png",
+    alt: "EduGenie Stripe checkout success",
+    caption: "Stripe checkout success — the course unlocks after payment.",
+  },
+];
+
 /**
- * The EduGenie case study, rendered inline as section `03` of the single-page
- * site. Its internal sections are numbered `03.x` so the whole page reads as one
- * document; the sub-decision headings are `h4`, one level under each `Section`'s
- * `h3`.
+ * The EduGenie case study, rendered on its own route (`/projects/edugenie`).
+ * `ProjectHeader` is the page `h1`, `Section`s are `h2` (numbered 01–07), and the
+ * engineering sub-decisions are `h3`.
  */
 export function EduGenieCaseStudy() {
   return (
-    <section id="edugenie" className="scroll-mt-24">
-      <ProjectHeader project={EDUGENIE} number="03" />
+    <>
+      <ProjectHeader project={EDUGENIE} />
 
-      <Section number="03.1" title="What it is">
+      <Section number="01" title="What it is">
         <p className="max-w-measure">
           An AI-powered e-learning platform. Instructors publish courses;
           students take them, sit quizzes, and earn certificates; instructors
@@ -29,7 +73,7 @@ export function EduGenieCaseStudy() {
         </p>
       </Section>
 
-      <Section number="03.2" title="My role">
+      <Section number="02" title="My role">
         <p className="max-w-measure">
           Team Leader and Full-Stack Developer, leading four other developers. I
           made the architecture decisions, distributed the work, and reviewed
@@ -42,11 +86,11 @@ export function EduGenieCaseStudy() {
         </p>
       </Section>
 
-      <Section number="03.3" title="Architecture">
+      <Section number="03" title="Architecture">
         <ArchitectureDiagram />
       </Section>
 
-      <Section number="03.4" title="Numbers">
+      <Section number="04" title="Numbers">
         <p className="text-text-muted max-w-measure">
           Every figure here was counted from the repository, and each one prints
           the command that reproduces it. There are no user counts, no latency
@@ -57,13 +101,23 @@ export function EduGenieCaseStudy() {
         <div className="mt-10">
           <StatStrip stats={EDUGENIE.stats} />
         </div>
-        <h4 className="mt-14">Student app</h4>
+        <h3 className="mt-14">Student app</h3>
         <div className="mt-6">
           <StatStrip stats={EDUGENIE_WEB_STATS} />
         </div>
       </Section>
 
-      <Section number="03.5" title="Engineering decisions">
+      <Section number="05" title="Screens">
+        <p className="text-text-muted max-w-measure">
+          The platform, deployed and running — the student app, the instructor
+          portal, and the admin dashboard.
+        </p>
+        <div className="mt-10">
+          <Screens items={SHOTS} />
+        </div>
+      </Section>
+
+      <Section number="06" title="Engineering decisions">
         <p className="text-text-muted max-w-measure">
           Four decisions, each stated as: the problem, the options, what I
           chose, and the trade-off I accepted. The code is pasted from the
@@ -71,7 +125,7 @@ export function EduGenieCaseStudy() {
         </p>
 
         {/* ------------------------------------------------------------- */}
-        <h4 className="mt-14">RAG chunking strategy</h4>
+        <h3 className="mt-14">RAG chunking strategy</h3>
         <p className="text-text-muted max-w-measure mt-3">
           1800-character windows, 250 characters of overlap, packed on sentence
           boundaries, with a hard-split escape hatch at 1.5× the window.
@@ -133,16 +187,16 @@ export function EduGenieCaseStudy() {
         </p>
 
         {/* ------------------------------------------------------------- */}
-        <h4 className="mt-14">
+        <h3 className="mt-14">
           Stripe: destination charges vs. separate charges
-        </h4>
+        </h3>
         <p className="text-text-muted max-w-measure mt-3">
-          The repository does both, and that is the interesting part. A
-          single-course purchase is a destination charge — the platform charges,
-          keeps <code>application_fee_amount</code>, and transfers the rest to
-          the instructor&rsquo;s connected account. A whole-cart purchase
-          spanning several instructors cannot be, so it uses separate charges
-          and transfers, with the platform as merchant of record.
+          The repository does both. A single-course purchase is a destination
+          charge: the platform charges, keeps{" "}
+          <code>application_fee_amount</code>, and transfers the rest to the
+          instructor&rsquo;s connected account. A cart spanning several
+          instructors can&rsquo;t be — one charge can&rsquo;t carry three
+          destinations — so it uses separate charges and transfers.
         </p>
         <CodeSample
           path="src/payments/stripe.service.ts"
@@ -160,46 +214,34 @@ payment_intent_data: {
  */`}
         />
         <p className="max-w-measure mt-6">
-          A destination charge routes one payment to exactly one connected
-          account — perfect for a single course. A cart can hold courses from
-          three instructors, and one charge cannot carry three destinations. So
-          a cart takes the money onto the platform account first, tags it with
-          the order id as the <code>transfer_group</code>, and issues one
-          Transfer per instructor after it settles — same checkout for the
-          student, different settlement underneath. Checkout fails early if any
-          instructor lacks a payouts-enabled account, naming who, because a
-          Transfer to a missing account would fail silently later.
+          For a cart, the money lands on the platform account first, tagged with
+          the order id as its <code>transfer_group</code>, and one Transfer goes
+          out per instructor once it settles — same checkout for the student,
+          different settlement underneath. Checkout fails early, naming any
+          instructor without a payouts-enabled account, since a Transfer to a
+          missing one would fail silently later. Either way the charge sits on
+          the platform account, so the platform is the merchant of record:
+          Stripe&rsquo;s processing fee comes off its balance, and its own cut —
+          the <code>application_fee</code> — is separate, the instructor
+          receiving the course price minus that fee.
         </p>
         <p className="max-w-measure mt-6">
-          In both flows the charge lands on the platform account, so the
-          platform is the merchant of record and Stripe&rsquo;s processing fee
-          comes out of the platform balance. The platform&rsquo;s own cut — the{" "}
-          <code>application_fee</code> — is separate: the instructor receives
-          the course price minus that fee, and the platform keeps the fee minus
-          Stripe&rsquo;s processing cost.
-        </p>
-        <p className="max-w-measure mt-6">
-          The platform also carries dispute liability in both, since the charge
-          is on its account. In the cart flow that is a real edge: if a student
-          disputes after an instructor has already been paid by Transfer, the
-          platform is out the refund unless it reverses that Transfer. Reversing
-          transfers on dispute is work I would add before real volume.
-        </p>
-        <p className="max-w-measure mt-6">
-          The trade-off: two money paths means two code paths to keep correct,
-          split reconciliation, and refund logic that diverges — a cart refund
-          reverses a specific Transfer, a destination-charge refund unwinds the
-          destination transfer. The charge can even succeed while a later
-          Transfer fails, if an instructor&rsquo;s account goes restricted
-          between checkout and payout; the up-front <code>charges_enabled</code>{" "}
-          check narrows that window but does not close it. I accepted the cost
-          because the two flows genuinely have different requirements —
-          collapsing them would either break carts or make single-course
-          purchases needlessly complex.
+          That also puts dispute liability on the platform. The cart edge: if a
+          student disputes after an instructor was already paid by Transfer, the
+          platform is out the refund unless it reverses that Transfer — work I
+          would add before real volume. The broader cost is two money paths to
+          keep correct: split reconciliation and diverging refunds (a cart
+          refund reverses a specific Transfer, a destination-charge refund
+          unwinds the destination transfer), and a charge that can succeed while
+          a later Transfer fails if an account goes restricted between checkout
+          and payout — the up-front <code>charges_enabled</code> check narrows
+          that window without closing it. I accepted the cost because the two
+          flows genuinely have different requirements; collapsing them would
+          break carts or make single-course purchases needlessly complex.
         </p>
 
         {/* ------------------------------------------------------------- */}
-        <h4 className="mt-14">Webhook idempotency</h4>
+        <h3 className="mt-14">Webhook idempotency</h3>
         <p className="text-text-muted max-w-measure mt-3">
           Stripe delivers <code>checkout.session.completed</code> at least once,
           and retries any webhook it does not acknowledge quickly. Fulfilling
@@ -235,15 +277,16 @@ if (existing) return;`}
         <p className="max-w-measure mt-6">
           The guard is a read-then-write — <code>findOne</code> then insert — so
           on its own, two simultaneous deliveries for the same session could
-          both pass the lookup before either writes. The database backs it: a
-          unique, sparse index on <code>stripeSessionId</code> means the second
-          insert fails outright, and the fulfillment code treats that
-          duplicate-key error as an already-fulfilled signal. The application
-          check is the fast path; the constraint is the guarantee.
+          both pass the lookup before either writes. The fix is a unique, sparse
+          index on <code>stripeSessionId</code>: the second insert would fail
+          outright and the fulfillment code could treat that duplicate-key error
+          as an already-fulfilled signal. I&rsquo;d add it before real volume —
+          today the application check is the guard, and the database constraint
+          that would make it airtight is not in place yet.
         </p>
 
         {/* ------------------------------------------------------------- */}
-        <h4 className="mt-14">Provider abstraction</h4>
+        <h3 className="mt-14">Provider abstraction</h3>
         <p className="text-text-muted max-w-measure mt-3">
           OpenAI and Gemini sit behind one interface, selected by a DI factory
           at module load: OpenAI when a key is present, Gemini otherwise.
@@ -303,7 +346,7 @@ export const TRANSCRIPTION_PROVIDER = Symbol('TRANSCRIPTION_PROVIDER');`}
         </p>
       </Section>
 
-      <Section number="03.6" title="What I'd do differently">
+      <Section number="07" title="What I'd do differently">
         <p className="text-text-muted max-w-measure">
           The most convincing rebuttal to &ldquo;how much of this did AI
           write?&rdquo; is a developer who can name what is wrong with their own
@@ -323,34 +366,35 @@ export const TRANSCRIPTION_PROVIDER = Symbol('TRANSCRIPTION_PROVIDER');`}
           real transactions.
         </p>
         <p className="max-w-measure mt-6">
-          The test suite had drifted from the code, and the drift hid behind
-          green checkmarks. On a clean clone, twelve of thirty-three spec files
-          were failing — some <code>nest g</code> boilerplate never filled in,
-          others with mocks that had not followed the services through a
-          refactor. That is worse than no tests: a half-broken suite gives false
-          confidence. I found it and repaired it to a green 140-test suite. The
-          real lesson was that nothing ran the suite automatically to catch the
-          drift the day it happened — which is the next item.
+          The test suite has drifted from the code, and the drift hides behind
+          green checkmarks run selectively. On a clean clone, twelve of
+          thirty-three spec files fail — some <code>nest g</code> boilerplate
+          never filled in, others with mocks that had not followed the services
+          through a refactor. That is worse than no tests: a half-broken suite
+          gives false confidence. Repairing it to a fully green suite is
+          outstanding work, and the deeper lesson is that nothing ran the suite
+          automatically to catch the drift the day it happened — which is the
+          next item.
         </p>
         <p className="max-w-measure mt-6">
-          There was no CI for most of the six weeks. Five people pushing, and
-          nothing automatically ran the tests or the build — which is exactly
-          how the drift above accumulated unseen. I have since added a GitHub
-          Actions gate: lint, build, and test on every push, required to pass
-          before merge. On a solo project you can skip it; on a five-person team
-          it is not optional, and I learned that the practical way.
+          There was no CI during the build. Five people pushing, and nothing
+          automatically ran the tests or the build — which is exactly how the
+          drift above accumulated unseen. The fix is a GitHub Actions gate:
+          lint, build, and test on every push, required to pass before merge. On
+          a solo project you can skip it; on a five-person team it is not
+          optional, and I learned that the practical way.
         </p>
         <p className="max-w-measure mt-6">
-          The webhook idempotency guard was a read-then-write with no database
+          The webhook idempotency guard is a read-then-write with no database
           constraint behind it — two simultaneous Stripe deliveries could both
-          pass the lookup before either wrote. I closed it with a unique, sparse
-          index on <code>stripeSessionId</code> (sparse because an order can
-          exist before its session id is set), and the fulfillment code now
-          treats the duplicate-key error as an already-fulfilled signal. The
-          application check is the fast path; the database constraint is the
-          guarantee.
+          pass the lookup before either wrote. The fix is a unique, sparse index
+          on <code>stripeSessionId</code> (sparse because an order can exist
+          before its session id is set), so the second insert would fail and the
+          fulfillment code could treat the duplicate-key error as an
+          already-fulfilled signal. I&rsquo;d add it before real volume — today
+          the application check is the only guard.
         </p>
       </Section>
-    </section>
+    </>
   );
 }
