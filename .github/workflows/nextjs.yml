@@ -61,6 +61,9 @@ jobs:
           #
           # You may remove this line if you want to manage the configuration yourself.
           static_site_generator: next
+          # Auto-enable Pages via API so the workflow doesn't fail when Pages
+          # isn't turned on in repo settings yet.
+          enablement: true
       - name: Restore cache
         uses: actions/cache@v4
         with:
