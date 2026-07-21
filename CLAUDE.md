@@ -2,10 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-@AGENTS.md
-
-Read `AGENTS.md` first. Next.js 16 here has breaking changes from training-data
-knowledge — check `node_modules/next/dist/docs/` before writing framework code.
+Next.js 16 here has breaking changes from training-data knowledge — check
+`node_modules/next/dist/docs/` before writing framework code.
 
 ## Commands
 
@@ -63,11 +61,9 @@ constraint: content is code.
 - `next.config.ts` — pins `turbopack.root` (a parent dir has its own lockfile;
   without the pin Turbopack infers the wrong workspace root) and the `/cv` redirect.
 
-Two root docs carry intent the code can't: `PORTFOLIO_BRIEF.md` is the build
-brief (why the site is shaped around projects-as-experience — Hedra has no
-formal employment history), and `ENGINEERING_DECISIONS_WORKSHEET.md` lists the
-write-ups only Hedra can author. Read the brief before changing what the home
-page argues; it is the reason for the section order.
+The home page is shaped around projects-as-experience because Hedra has no
+formal employment history — that is why the section order leads with work, not
+a career timeline. Preserve that argument when changing the home page.
 
 ### Two rules the codebase enforces
 
