@@ -11,7 +11,7 @@ knowledge — check `node_modules/next/dist/docs/` before writing framework code
 
 ```bash
 npm run dev            # dev server, http://localhost:3000
-npm run build          # production build (static export)
+npm run build          # production build
 
 # The four CI checks — run before committing. CI fails on any one.
 npm run format:check   # prettier
@@ -26,7 +26,24 @@ npm run check:todos    # fail if any <Todo> placeholder still renders (see below
 
 CI (`.github/workflows/ci.yml`) runs format:check, lint, typecheck, build on push
 and PR. Node 24. There is no test runner — correctness is enforced by the type
-system and build, not unit tests.
+system and build, not unit tests. `check:todos` is **not** wired into CI; run it
+yourself before shipping content.
+
+## Deploy
+
+GitHub Pages, via `.github/workflows/nextjs.yml` on push to `main` (Node 20 —
+CI's Node 24 does not cover it). That workflow runs `next build` and uploads
+`./out`, relying on `actions/configure-pages@v5` with `static_site_generator: next`
+to inject the static-export settings. Two things follow:
+
+- `next.config.ts` has no `output: "export"` of its own — `out/` never appears
+  from a plain local `npm run build`. To reproduce the deploy build, add the
+  flag temporarily or read the Pages workflow log.
+- The `/cv` redirect in `next.config.ts` is a `redirects()` entry, which static
+  export does not emit. It works in `next dev`/`next start`, not on Pages.
+
+Both are live mismatches, not settled design — check the last Pages run before
+assuming a content change is actually online.
 
 ## Architecture
 
@@ -43,6 +60,14 @@ constraint: content is code.
 - `components/` — shared UI. Server components unless a hook forces `"use client"`.
 - `content/` — project data (`projects.ts`), CV (`cv.ts`), metrics (`metrics.ts`).
 - `lib/site.ts` — single source of truth for site-wide facts (name, nav, contact).
+- `next.config.ts` — pins `turbopack.root` (a parent dir has its own lockfile;
+  without the pin Turbopack infers the wrong workspace root) and the `/cv` redirect.
+
+Two root docs carry intent the code can't: `PORTFOLIO_BRIEF.md` is the build
+brief (why the site is shaped around projects-as-experience — Hedra has no
+formal employment history), and `ENGINEERING_DECISIONS_WORKSHEET.md` lists the
+write-ups only Hedra can author. Read the brief before changing what the home
+page argues; it is the reason for the section order.
 
 ### Two rules the codebase enforces
 

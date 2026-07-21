@@ -31,7 +31,7 @@ export default function HomePage() {
       {/* ---------------------------------------------------------------- HERO */}
       <section
         id="top"
-        className="relative flex min-h-[88vh] flex-col justify-center overflow-hidden px-[clamp(20px,5vw,72px)] pt-[120px] pb-[80px]"
+        className="relative flex flex-col overflow-hidden px-[clamp(20px,5vw,72px)] pt-[28px] pb-[48px] sm:min-h-[88vh] sm:justify-center sm:pt-[120px] sm:pb-[80px]"
       >
         {/* Static grid overlay, masked to a soft vignette. No pan animation. */}
         <div
@@ -97,11 +97,17 @@ export default function HomePage() {
             </Reveal>
 
             <Reveal>
-              <div className="flex flex-wrap items-center gap-4">
-                <Link href="#work" className="btn btn-primary">
+              <div className="flex flex-nowrap items-center gap-3 sm:gap-4">
+                <Link
+                  href="#work"
+                  className="btn btn-primary whitespace-nowrap px-5 sm:px-7"
+                >
                   View my work →
                 </Link>
-                <a href="/cv" className="btn btn-ghost">
+                <a
+                  href="/cv"
+                  className="btn btn-ghost whitespace-nowrap px-5 sm:px-7"
+                >
                   Download CV ↗
                 </a>
               </div>
