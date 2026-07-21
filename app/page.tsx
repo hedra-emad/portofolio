@@ -100,13 +100,13 @@ export default function HomePage() {
               <div className="flex flex-nowrap items-center gap-3 sm:gap-4">
                 <Link
                   href="#work"
-                  className="btn btn-primary whitespace-nowrap px-5 sm:px-7"
+                  className="btn btn-primary px-5 whitespace-nowrap sm:px-7"
                 >
                   View my work →
                 </Link>
                 <a
                   href="/cv"
-                  className="btn btn-ghost whitespace-nowrap px-5 sm:px-7"
+                  className="btn btn-ghost px-5 whitespace-nowrap sm:px-7"
                 >
                   Download CV ↗
                 </a>
